@@ -37,10 +37,14 @@ Success metric: **signups and active users**. Not likes, views, followers or sta
 | Path | What lives there | Written by |
 |---|---|---|
 | `apps/<app>.yaml` | App registry: audience, pain, keywords, competitors, links, channels | Owner + Growth Lead |
-| `.claude/skills/<agent>/SKILL.md` | One skill per agent (how it works, output contract) | Built per phase |
+| `.claude/skills/engine/`, `.claude/skills/analyst/` | The two agents (engine = scout+writer+replier+video+growth lead) | Engineering |
+| `.claude/skills/*` (others) | Vendored marketing skills, see `VENDORED.md` | - |
 | `drafts/<app>/<type>/<date>-<slug>.md` | Drafts (post, reply, video, article, listing) with frontmatter | Writer, Replier, Video Producer |
-| `queue/` | Approved items waiting for Buffer capacity | `scripts/publish.mjs` |
-| `published/log.jsonl` | One line per published/scheduled item: Buffer post ID, channel, link, UTM | `scripts/publish.mjs` |
+| `state` branch: `queue/pending.jsonl` | Approved items waiting for Buffer capacity | `scripts/publish.mjs` |
+| `state` branch: `published/log.jsonl` | One line per scheduled item: Buffer post ID, channel, link | `scripts/publish.mjs` |
+| `channels.yaml` | Channel playbook: how each ships, caps, status | Engine + Analyst |
+| `strategy/<app>.md` | Calendar, scoreboard, experiments, decisions | Engine + Analyst |
+| `reports/runs/<date>.md` | Engine run log | Engine |
 | `research/scout/<app>/<date>-<am|pm>.md` | Ranked threads and topics | Scout |
 | `reports/plans/<date>-<app>.md` | Weekly plan (mirrored to an issue) | Growth Lead |
 | `reports/weekly/<date>.md` | Scoreboard (mirrored to an issue) | Analyst |

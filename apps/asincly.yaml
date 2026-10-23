@@ -104,11 +104,10 @@ channels:
     other: [news.ycombinator.com, indiehackers.com]
 
 analytics:
-  tool: TODO(owner)        # umami | posthog. No tracking script in the app today.
+  tool: first-party        # UTM saved on the organization at onboarding; no third-party script
+  stats_url: https://asincly.codeaz.org/api/stats   # Bearer ASINCLY_STATS_TOKEN; aggregate counts only
   utm_campaign_prefix: asincly
   goals: [signup, first_check_in, team_with_2plus_members]
 
-owner_decisions:
-  - "TODO(owner): Brief said 'async meeting tool'; product + site say 'async standups'. Keep standups as the wedge?"
-  - "TODO(owner): Current signups / active users baseline (needed for the scoreboard)"
-  - "TODO(owner): Is it OK to show your name/face as the maker in videos and replies?"
+baseline: {date: 2026-10-23, orgs: 0, active_users: 0}
+maker_on_camera: optional   # prefer faceless demos; text disclosure "I'm the maker" always
