@@ -34,11 +34,14 @@ public, unauthenticated endpoints and respect robots/terms. Prefer:
 
 - Hacker News: `https://hn.algolia.com/api/v1/search_by_date?query=<kw>&tags=(story,comment)&numericFilters=created_at_i><epoch-7d>`
 - Reddit: blocked for automation (2026-10-23: search.json 403, search.rss 429). Don't
-  fetch it. Instead read open issues labeled `thread` where the owner pasted Reddit URLs,
-  and draft replies for those. Never use cookies or logins.
+  fetch it. Instead read open issues labeled `thread`: the owner pastes the thread URL,
+  the question text and the subreddit rules there. Draft a reply for each (one PR per
+  reply, `channels: []`, `manual_target:` the thread URL), then comment the PR link on the
+  issue and close it. Never use cookies or logins.
 - DEV: `https://dev.to/api/articles?tag=remote&per_page=20` and `?tag=productivity`.
 - Search demand: Google suggest `https://suggestqueries.google.com/complete/search?client=firefox&q=<kw>`.
-- Local runs may also use the `agent-reach` skill if installed.
+- Agent-Reach: local runs only (it relies on a logged-in browser for most platforms, which
+  agents must not use). Never in cloud runs.
 
 Save `research/scout/<app>/<YYYY-MM-DD>.md`: ranked list (max 10) of threads with URL,
 age, why it matters, suggested action (reply / topic idea / ignore). Skip threads older
@@ -97,6 +100,17 @@ PR per item: branch `claude/<app>-<type>-<slug>`, title `[<app>][<channel>] <sum
 labels `draft`, `<app>`, `<channel>`. PR body: what, why now (signal + experiment id),
 where it goes, how approval works ("Merge = schedule in Buffer" or "Merge, then post
 manually: steps..."). Keep it readable on a phone.
+
+## 4b. Monday: weekly plan (Growth Lead)
+
+On Mondays (or the first run of a week), before drafting, open one issue per app titled
+`Plan <app> <YYYY-MM-DD>` (label `plan`), readable on a phone:
+- Last week in 3 lines: shipped, users per channel (from the latest scoreboard), what the
+  owner merged vs closed.
+- This week: the pillar topic, the 5-10 items planned per channel, the calendar must-dos.
+- Exactly ONE decision for the owner as a yes/no question.
+Mirror it to `reports/plans/<YYYY-MM-DD>-<app>.md` in the log PR. Skip if this week's plan
+issue already exists.
 
 ## 5. Log
 
