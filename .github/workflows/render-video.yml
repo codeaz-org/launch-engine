@@ -1,0 +1,81 @@
+name: render-video
+
+# On a video draft PR: render the video, publish it to the `media` branch (served by GitHub
+# Pages at https://codeaz-org.github.io/launch-engine/<app>/<slug>.mp4) and comment the
+# preview link, so the owner watches it on the phone before merging. Merging the PR then
+# schedules that exact file in Buffer (scripts/publish.mjs derives the URL).
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths: ['drafts/*/video/*.md']
+  workflow_dispatch:
+    inputs:
+      drafts:
+        description: 'Space-separated video draft paths to (re)render'
+        required: true
+
+concurrency:
+  group: media-branch
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  render:
+    # Same-repo branches only: never run write steps for forks.
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+      - name: Find video drafts
+        id: drafts
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            files=$(git diff --name-only --diff-filter=AM "${{ github.event.pull_request.base.sha }}" HEAD -- 'drafts/*/video/*.md' | tr '\n' ' ')
+          else
+            files="${{ inputs.drafts }}"
+          fi
+          echo "files=$files" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-node@v4
+        if: steps.drafts.outputs.files != ''
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        if: steps.drafts.outputs.files != ''
+        with:
+          python-version: '3.12'
+      - name: Install tools
+        if: steps.drafts.outputs.files != ''
+        run: |
+          pip install edge-tts==7.3.1
+          command -v ffprobe || { sudo apt-get update -q && sudo apt-get install -yq ffmpeg; }
+          cd video && npm ci && npx remotion browser ensure
+      - name: Render
+        if: steps.drafts.outputs.files != ''
+        run: for f in ${{ steps.drafts.outputs.files }}; do (cd video && node render.mjs "../$f"); done
+      - name: Publish to media branch
+        if: steps.drafts.outputs.files != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin media
+          git worktree add media origin/media && git -C media switch -c media
+          cp -r video/out/* media/
+          cd media && git add -A
+          git diff --cached --quiet || { git commit -m "media: render ${{ steps.drafts.outputs.files }}" && git push origin media; }
+      - name: Comment preview links
+        if: steps.drafts.outputs.files != '' && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          body="Rendered. Watch before merging (GitHub Pages can take a minute to update):"
+          for f in ${{ steps.drafts.outputs.files }}; do
+            app=$(echo "$f" | cut -d/ -f2); slug=$(basename "$f" .md)
+            body="$body"$'\n'"- https://codeaz-org.github.io/launch-engine/$app/$slug.mp4"
+          done
+          gh pr comment "${{ github.event.pull_request.number }}" --body "$body"

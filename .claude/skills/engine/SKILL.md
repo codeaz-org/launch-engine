@@ -90,8 +90,14 @@ Where each item goes:
   date, keywords). One search intent per page, original and useful; link to signup with
   `utm_source=guide&utm_medium=organic`. Also add a copy of the brief to
   `drafts/<app>/seo/` here so the log stays in one place.
-- **video**: `drafts/<app>/video/<date>-<slug>.md` with script (timed beats), on-screen
-  text, caption, and `media: []` until rendered.
+- **video**: `drafts/<app>/video/<date>-<slug>.md`, `type: video`, `media: []`, channels
+  from tiktok / instagram / linkedin. The body is the caption. The frontmatter carries a
+  `video:` block that `video/render.mjs` renders (copy the shape of
+  `drafts/asincly/video/2026-10-27-launch.md`): 4-6 `beats`, each with `show` (on-screen
+  caption, max ~10 words, `**accent**` for one key phrase), `say` (narration, one sentence)
+  and optional `image` (a public screenshot URL from the app repo), plus `end`
+  (`headline`, `url`, `say`). 20-40 s total; hook in the first beat. The PR's
+  render-video check posts a preview link; merging schedules that exact file.
 
 PR per item: branch `claude/<app>-<type>-<slug>`, title `[<app>][<channel>] <summary>`,
 labels `draft`, `<app>`, `<channel>`. PR body: what, why now (signal + experiment id),
