@@ -1,0 +1,31 @@
+name: Thread to answer
+description: Paste a Reddit / forum thread; the engine drafts a helpful reply as a PR.
+title: "[thread] "
+labels: [thread]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Thread URL
+      placeholder: https://www.reddit.com/r/remotework/comments/...
+    validations:
+      required: true
+  - type: dropdown
+    id: app
+    attributes:
+      label: App
+      options: [asincly]
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: The question (paste the post text and any key comments)
+      description: Agents can't read Reddit, so paste what matters.
+    validations:
+      required: true
+  - type: textarea
+    id: rules
+    attributes:
+      label: Community rules on self-promotion (paste or summarize)
+      description: Sidebar / wiki rules. If self-promotion is banned, the reply won't mention the app.

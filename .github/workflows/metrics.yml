@@ -1,0 +1,45 @@
+name: metrics
+
+# Daily: Buffer status, public link and metrics for every published post, written to
+# metrics/latest.json on the `state` branch for the Analyst. Read-only against Buffer.
+on:
+  schedule:
+    - cron: '37 5 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: state-branch
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  metrics:
+    if: vars.PUBLISH_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: Check out state branch
+        run: |
+          git ls-remote --exit-code --heads origin state >/dev/null || { echo "No state branch yet"; exit 0; }
+          git worktree add state origin/state && git -C state switch -c state
+      - name: Fetch metrics
+        if: hashFiles('state/published/log.jsonl') != ''
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: node scripts/metrics.mjs
+      - name: Commit
+        if: hashFiles('state/metrics/latest.json') != ''
+        working-directory: state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add metrics
+          git diff --cached --quiet || { git commit -m "metrics: daily Buffer snapshot" && git push origin state; }
