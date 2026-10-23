@@ -105,7 +105,7 @@ channels:
 
 analytics:
   tool: first-party        # UTM saved on the organization at onboarding; no third-party script
-  stats_url: https://asincly.codeaz.org/api/stats   # Bearer ASINCLY_STATS_TOKEN; aggregate counts only
+  stats_url: https://asincly.codeaz.org/api/stats   # token added by the cloud env network secret; aggregate counts only
   utm_campaign_prefix: asincly
   goals: [signup, first_check_in, team_with_2plus_members]
 
