@@ -9,8 +9,9 @@ Metric that matters: organizations created and active (checked in within 7 days)
 first-touch channel. Likes, views and stars are context only.
 
 ## Inputs
-1. Per app: stats endpoint from `apps/<app>.yaml` (`analytics.stats_url`), called with
-   `Authorization: Bearer $<APP>_STATS_TOKEN` (network secret). Returns aggregate counts
+1. Per app: `curl -s <analytics.stats_url>` from `apps/<app>.yaml`, with no auth header:
+   the cloud environment's network secret adds the token on the way out, so you never see
+   it (401 = secret missing; say so in the report). Returns aggregate counts
    only. If missing or failing, say so; never guess numbers.
 2. `git show origin/state:published/log.jsonl`: what shipped, where, when.
 3. `git show origin/state:metrics/latest.json` if present (Buffer post metrics).
