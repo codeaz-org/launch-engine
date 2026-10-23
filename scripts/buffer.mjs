@@ -54,15 +54,18 @@ export async function scheduledPosts(organizationId) {
   return data.posts.edges.map((e) => e.node);
 }
 
-// input: { channelId, text, dueAt?, assets? } ; dueAt (ISO UTC) => customScheduled, else addToQueue
-export async function createPost({ channelId, text, dueAt, assets }) {
+// input: { channelId, text, dueAt?, assets?, metadata? } ; dueAt (ISO UTC) => customScheduled, else addToQueue
+// Schema checked by introspection 2026-10-23: `assets` is required (may be empty);
+// Instagram needs metadata.instagram { type, shouldShareToFeed }.
+export async function createPost({ channelId, text, dueAt, assets = [], metadata }) {
   const input = {
     channelId,
     text,
     schedulingType: 'automatic',
     mode: dueAt ? 'customScheduled' : 'addToQueue',
+    assets,
     ...(dueAt && { dueAt }),
-    ...(assets?.length && { assets }),
+    ...(metadata && { metadata }),
   };
   const data = await gql(
     `mutation ($input: CreatePostInput!) {

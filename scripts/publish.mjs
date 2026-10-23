@@ -32,8 +32,20 @@ async function readJsonl(path) {
   return (await readFile(path, 'utf8')).split('\n').filter(Boolean).map((l) => JSON.parse(l));
 }
 
+const isVideo = (url) => /\.(mp4|mov|webm)$/i.test(url);
+
 function assetsFor(media = []) {
-  return media.map((url) => (/\.(mp4|mov|webm)$/i.test(url) ? { video: { url } } : { image: { url } }));
+  return media.map((url) => (isVideo(url) ? { video: { url } } : { image: { url } }));
+}
+
+// Per-service metadata Buffer requires; a draft's own `metadata.<service>` wins.
+function metadataFor(service, meta) {
+  const own = meta.metadata?.[service];
+  if (service === 'instagram') {
+    const type = (meta.media ?? []).some(isVideo) ? 'reel' : 'post';
+    return { instagram: { type, shouldShareToFeed: true, ...own } };
+  }
+  return own ? { [service]: own } : undefined;
 }
 
 async function main(drafts) {
@@ -73,7 +85,9 @@ async function main(drafts) {
     }
     const { meta, text } = await readDraft(item.draft);
     const dueAt = meta.schedule && meta.schedule !== 'queue' ? new Date(meta.schedule).toISOString() : undefined;
-    const post = await createPost({ channelId: ch.id, text, dueAt, assets: assetsFor(meta.media) });
+    const post = await createPost({
+      channelId: ch.id, text, dueAt, assets: assetsFor(meta.media), metadata: metadataFor(item.channel, meta),
+    });
     creates++;
     counts[ch.id] = (counts[ch.id] ?? 0) + 1;
     await appendFile(LOG, JSON.stringify({
