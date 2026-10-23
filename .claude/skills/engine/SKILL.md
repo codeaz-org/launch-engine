@@ -33,9 +33,9 @@ Find live conversations and search demand for the app's `pain` and `keywords`. U
 public, unauthenticated endpoints and respect robots/terms. Prefer:
 
 - Hacker News: `https://hn.algolia.com/api/v1/search_by_date?query=<kw>&tags=(story,comment)&numericFilters=created_at_i><epoch-7d>`
-- Reddit: `https://www.reddit.com/r/<sub>/search.json?q=<kw>&restrict_sr=1&sort=new&t=week`
-  with a descriptive User-Agent. If blocked (403/429), try the `.rss` variant once, then
-  skip Reddit for this run and note it. Never use cookies or logins.
+- Reddit: blocked for automation (2026-10-23: search.json 403, search.rss 429). Don't
+  fetch it. Instead read open issues labeled `thread` where the owner pasted Reddit URLs,
+  and draft replies for those. Never use cookies or logins.
 - DEV: `https://dev.to/api/articles?tag=remote&per_page=20` and `?tag=productivity`.
 - Search demand: Google suggest `https://suggestqueries.google.com/complete/search?client=firefox&q=<kw>`.
 - Local runs may also use the `agent-reach` skill if installed.
