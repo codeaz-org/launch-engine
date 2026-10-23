@@ -5,3 +5,6 @@ node_modules/
 .DS_Store
 *.mp4
 *.mov
+video/node_modules/
+video/out/
+video/public/
