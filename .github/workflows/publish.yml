@@ -1,0 +1,48 @@
+name: publish
+
+# Merge to main = approval. Schedules approved drafts in Buffer, then commits the log/queue.
+# Off until the repo variable PUBLISH_ENABLED is set to "true".
+on:
+  push:
+    branches: [main]
+    paths: ['drafts/**']
+  schedule:
+    - cron: '17 6 * * *'   # daily drain of queue/pending.jsonl when Buffer has room
+  workflow_dispatch:
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: vars.PUBLISH_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: Find merged drafts
+        id: drafts
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            files=$(git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- 'drafts/**/*.md' | tr '\n' ' ')
+          fi
+          echo "files=${files:-}" >> "$GITHUB_OUTPUT"
+      - name: Schedule in Buffer
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: node scripts/publish.mjs ${{ steps.drafts.outputs.files }}
+      - name: Commit log and queue
+        run: |
+          git config user.name "launch-engine[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add published/ queue/
+          git diff --cached --quiet || { git commit -m "publish: log Buffer posts [skip ci]" && git push; }

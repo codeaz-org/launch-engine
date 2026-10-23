@@ -1,0 +1,114 @@
+# App registry: Asincly (pilot). Source facts: codeaz-org/asincly README @ dd5ba0b, live site.
+# Fields marked TODO(owner) need your input.
+
+id: asincly
+name: Asincly
+status: pilot            # pilot | active | paused | dropped
+language: en
+
+one_liner: "Async standups for remote teams: record two minutes, AI writes the check-in."
+tagline_live: "Standups that respect sleep"     # current <title> on asincly.codeaz.org
+
+links:
+  app: https://asincly.codeaz.org
+  signup: https://asincly.codeaz.org/sign-in
+  pricing: https://asincly.codeaz.org/pricing
+  repo: https://github.com/codeaz-org/asincly
+  self_host_docs: https://github.com/codeaz-org/asincly/blob/main/docs/DEPLOYMENT.md
+  release: https://github.com/codeaz-org/asincly/releases/tag/v0.1.0
+  demo_gif: https://github.com/codeaz-org/asincly/raw/main/docs/screenshots/demo.gif
+
+facts:
+  license: AGPL-3.0-or-later
+  self_hostable: true          # Docker Compose; free stack paths documented
+  version: 0.1.0 (2026-10-18)
+  stack: Next.js 16, Postgres + RLS, Groq (Whisper + Llama), S3-compatible storage
+  pricing:
+    free: "EUR 0, up to 3 members, 1 team, 30 AI video min/month, 14 days history"
+    pro: "EUR 8 per member/month (EUR 80/year), 14-day trial, no card"
+  differentiators:
+    - Each person checks in during their own local window (DST-safe), no shared meeting time
+    - Video-first; AI drafts yesterday / today / blockers, ticks off last plan, carries over the rest
+    - Auto-tags teammates you mention; blockers get "I can help" / "Resolved"
+    - Day rail shows every teammate at their local time (asleep / in window / done)
+    - Privacy: Postgres row-level security per request, encrypted transcripts, media never via app server
+    - Open source and self-hostable with every feature, no license key
+    - Works without AI (type the check-in instead)
+
+audience:
+  primary:
+    who: "Engineering / product leads of remote teams, 3-30 people, spread over 3+ time zones"
+    trigger: "Daily standup lands at a bad hour for someone; written standup bots get ignored"
+  secondary:
+    - "Self-hosting / privacy-minded teams who won't put standup video in a US SaaS"
+    - "Open-source maintainers and small agencies with distributed contributors"
+    - "Teams on Slack who already tried Geekbot-style text bots"
+  not_for:
+    - Co-located teams with a working standup
+    - Enterprises needing SOC2 paperwork today
+
+pain:
+  - "Standup at 09:30 New York is 22:30 Tokyo; someone is always awake at the wrong time"
+  - "Text standup bots get one-line answers; context gets lost"
+  - "Recording a Loom is easy but nobody reads 12 videos; no structure, no blockers view"
+  - "Blockers sit unseen until the next meeting"
+  - "Managers want visibility without micromanaging or another meeting"
+
+keywords:
+  primary: [async standup, asynchronous standup, async daily standup, video standup]
+  secondary:
+    - standup bot alternative
+    - geekbot alternative
+    - open source standup tool
+    - self-hosted standup
+    - remote team check-in
+    - daily check-in app
+    - async video updates
+    - standup across time zones
+    - distributed team standup
+  questions:
+    - how to run standups across time zones
+    - are async standups better than daily meetings
+    - best async standup tool for remote teams
+    - free geekbot alternative
+
+competitors:
+  - {name: Geekbot, url: https://geekbot.com, angle: "Slack text bot; Asincly is video + AI draft, open source"}
+  - {name: DailyBot, url: https://www.dailybot.com, angle: "chat check-ins; Asincly is time-zone-native, self-hostable"}
+  - {name: Standuply, url: https://standuply.com, angle: "Slack bot with video answers; closed source"}
+  - {name: Status Hero, url: https://statushero.com, angle: "text check-ins + goals"}
+  - {name: Range, url: https://www.range.co, angle: "check-ins + team rituals"}
+  - {name: Loom, url: https://www.loom.com, angle: "unstructured video; Asincly adds structure, blockers, digest"}
+  - {name: Claap, url: https://www.claap.io, angle: "async video meetings, paid"}
+  - {name: Friday, url: https://friday.app, angle: "async updates"}
+
+positioning_draft: >
+  For remote teams spread across time zones, Asincly replaces the daily standup meeting
+  with a two-minute video each person records in their own morning; AI turns it into a
+  scannable yesterday / today / blockers note. Unlike Slack standup bots, people actually
+  say what matters; unlike Loom, the team gets one structured screen, not a pile of videos.
+  Open source and self-hostable.
+
+channels:
+  buffer: [linkedin, instagram, tiktok]       # free plan, 3 channels
+  manual:                                     # drafts only, owner submits
+    - {name: Show HN, url: https://news.ycombinator.com/submit}
+    - {name: Product Hunt, url: https://www.producthunt.com, week: 5}
+    - {name: AlternativeTo, url: https://alternativeto.net, note: "list as alternative to Geekbot, Standuply"}
+    - {name: SaaSHub, url: https://www.saashub.com}
+    - {name: awesome-selfhosted, url: https://github.com/awesome-selfhosted/awesome-selfhosted, note: "check inclusion criteria (project age)"}
+    - {name: DEV, url: https://dev.to}
+    - {name: Hashnode, url: https://hashnode.com}
+  communities_to_scout:                        # read-only; replies are drafts
+    reddit: [remotework, digitalnomad, projectmanagement, agile, scrum, ExperiencedDevs, EngineeringManagers, selfhosted, opensource, SaaS]
+    other: [news.ycombinator.com, indiehackers.com]
+
+analytics:
+  tool: TODO(owner)        # umami | posthog. No tracking script in the app today.
+  utm_campaign_prefix: asincly
+  goals: [signup, first_check_in, team_with_2plus_members]
+
+owner_decisions:
+  - "TODO(owner): Brief said 'async meeting tool'; product + site say 'async standups'. Keep standups as the wedge?"
+  - "TODO(owner): Current signups / active users baseline (needed for the scoreboard)"
+  - "TODO(owner): Is it OK to show your name/face as the maker in videos and replies?"
