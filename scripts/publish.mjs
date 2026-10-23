@@ -10,6 +10,7 @@
 
 import { readFile, writeFile, appendFile } from 'node:fs/promises';
 import { existsSync, mkdirSync } from 'node:fs';
+import { basename } from 'node:path';
 import { parse } from 'yaml';
 import { organizations, channels, scheduledPosts, createPost } from './buffer.mjs';
 
@@ -19,12 +20,27 @@ const STATE_DIR = process.env.STATE_DIR ?? 'state';
 const QUEUE = `${STATE_DIR}/queue/pending.jsonl`;
 const LOG = `${STATE_DIR}/published/log.jsonl`;
 const DRY_RUN = !!process.env.DRY_RUN;
+// Rendered videos (render-video workflow) are served by GitHub Pages from the `media` branch.
+const MEDIA_BASE = process.env.MEDIA_BASE ?? 'https://codeaz-org.github.io/launch-engine';
 
 async function readDraft(path) {
   const src = await readFile(path, 'utf8');
   const m = src.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   if (!m) throw new Error(`${path}: missing frontmatter`);
-  return { meta: parse(m[1]), text: m[2].trim() };
+  const meta = parse(m[1]);
+  if (meta.type === 'video' && !meta.media?.length) {
+    meta.media = [`${MEDIA_BASE}/${meta.app}/${basename(path, '.md')}.mp4`];
+  }
+  return { meta, text: m[2].trim() };
+}
+
+// Buffer fetches media at publish time; don't schedule a post whose file isn't live yet.
+async function mediaLive(urls = []) {
+  for (const url of urls) {
+    const res = await fetch(url, { method: 'HEAD' }).catch(() => null);
+    if (!res?.ok) return false;
+  }
+  return true;
 }
 
 async function readJsonl(path) {
@@ -84,6 +100,11 @@ async function main(drafts) {
       continue;
     }
     const { meta, text } = await readDraft(item.draft);
+    if (!(await mediaLive(meta.media))) {
+      console.error(`Media not live yet for ${item.draft}; keeping in queue.`);
+      remaining.push(item);
+      continue;
+    }
     const dueAt = meta.schedule && meta.schedule !== 'queue' ? new Date(meta.schedule).toISOString() : undefined;
     const post = await createPost({
       channelId: ch.id, text, dueAt, assets: assetsFor(meta.media), metadata: metadataFor(item.channel, meta),
