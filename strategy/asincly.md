@@ -21,7 +21,16 @@ Start date of the launch kit: 2026-10-26 (week 1).
 ## Scoreboard (Analyst updates)
 | Channel | Status | Items shipped | Visits | Orgs created | Active orgs | Since |
 |---|---|---|---|---|---|---|
-| (no data yet) | | | | | | |
+| (unattributed) | n/a | n/a | n/a | 1 | 1 | pre-launch |
+| linkedin | explore | 0 (post #4 queued for 2026-10-28; Buffer publishing off) | n/a | 0 | 0 | 2026-10-23 |
+| seo | explore | 0 (guide asincly#17 not live) | n/a | 0 | 0 | 2026-10-23 |
+| hackernews | explore | 0 (draft approved, post week 2) | n/a | 0 | 0 | 2026-10-23 |
+| directories | explore | 0 (copy approved, owner submits) | n/a | 0 | 0 | 2026-10-23 |
+| reddit, dev, hashnode, instagram, tiktok | explore | 0 | n/a | 0 | 0 | 2026-10-23 |
+
+Stats 2026-10-23 (api/stats): orgs 1, orgs_7d 0, orgs_28d 1, active_users_7d 1, check_ins_7d 3.
+The one org has no UTM source (source null); likely the owner's own test org, not a user.
+Visits are not measured (first-party stats count orgs only).
 
 ## Beliefs and experiments
 Each experiment: id, channel, hypothesis, what counts as success, end date.
@@ -37,3 +46,5 @@ Each experiment: id, channel, hypothesis, what counts as success, end date.
   need visit-level funnels.
 - 2026-10-23: Positioning wedge = async standups across time zones (product + site already say it).
 - 2026-10-23: Maker face/name optional; prefer faceless screen-recorded demos and "I'm the maker" text disclosure.
+- 2026-10-23 (Analyst): week 0, nothing published, no channel has data. No kill-rule action.
+  E1-E5 stay open; first real read is the 2026-11-06 scoreboard.
