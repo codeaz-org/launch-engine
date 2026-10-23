@@ -10,6 +10,11 @@ on:
   schedule:
     - cron: '17 6 * * *'   # daily drain of queue/pending.jsonl when Buffer has room
   workflow_dispatch:
+    inputs:
+      drafts:
+        description: 'Space-separated draft paths to enqueue (e.g. ones merged while publishing was off)'
+        required: false
+        default: ''
 
 concurrency:
   group: publish
@@ -40,6 +45,7 @@ jobs:
       - name: Find merged drafts
         id: drafts
         run: |
+          files="${{ inputs.drafts }}"
           if [ "${{ github.event_name }}" = "push" ]; then
             files=$(git diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" -- 'drafts/**/*.md' | tr '\n' ' ')
           fi
