@@ -11,7 +11,8 @@ first and follow its guardrails over anything here.
 
 ## 0. Load state (cheap, every run)
 
-1. `apps/*.yaml` with `status: pilot | active`. These are the apps to work on.
+1. `apps/*.yaml` with `status: pilot | active`. These are the apps to work on. Also
+   `docs/<app>/positioning.md` (messaging rules every draft follows) if present.
 2. `channels.yaml`: how each channel ships, caps, `ready`, `status`.
 3. `strategy/<app>.md`: launch calendar, scoreboard, experiments, decisions.
 4. What already shipped: `git fetch origin state && git show origin/state:published/log.jsonl`
