@@ -9,7 +9,7 @@ linkedin:
   publish: buffer
   format: "Text post 600-1,300 chars, first line = hook, 1 link max (or link in first comment), no hashtag walls (max 3)"
   max_per_week: 4
-  ready: false              # true once the codeaz LinkedIn is connected in Buffer
+  ready: true               # codeazorg connected in Buffer (shared with mpt)
   status: explore
   best_for: [launch announcement, build-in-public, time-zone pain stories, lessons]
 
@@ -18,7 +18,7 @@ instagram:
   format: "Reel (video) or single image + caption; link goes in bio, caption says 'link in bio'"
   needs_media: true
   max_per_week: 3
-  ready: false
+  ready: true
   status: explore
   best_for: [short demo clips, before/after standup, remote-work memes done tastefully]
 
@@ -27,7 +27,7 @@ tiktok:
   format: "9:16 video 20-45 s, hook in first 2 s, captions burned in; no trending sounds (needs manual)"
   needs_media: true
   max_per_week: 3
-  ready: false
+  ready: true
   status: explore
   best_for: [remote-work pain, demo of the 2-minute check-in, time-zone jokes]
 
@@ -35,7 +35,7 @@ seo:
   publish: site             # PR to codeaz-org/<app> adding content/guides/<slug>.md
   format: "Guide/comparison page 900-1,800 words answering ONE search intent; title <= 60 chars; meta description <= 155"
   max_per_week: 2
-  ready: false              # true once the /guides route is merged in the app
+  ready: true               # /guides live on asincly.codeaz.org
   status: explore
   best_for: [alternatives pages, how-to across time zones, templates, comparisons]
 
