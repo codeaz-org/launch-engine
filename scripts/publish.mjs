@@ -5,17 +5,19 @@
 //   node scripts/publish.mjs [draft.md ...]   # enqueue these drafts, then drain the queue
 //   DRY_RUN=1 node scripts/publish.mjs ...    # show what would happen, call nothing
 //
-// Queue: queue/pending.jsonl  ({draft, channel} per line). Log: published/log.jsonl.
+// Queue and log live on the `state` branch (main is PR-only), checked out at $STATE_DIR:
+//   $STATE_DIR/queue/pending.jsonl ({draft, channel} per line), $STATE_DIR/published/log.jsonl
 
 import { readFile, writeFile, appendFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, mkdirSync } from 'node:fs';
 import { parse } from 'yaml';
 import { organizations, channels, scheduledPosts, createPost } from './buffer.mjs';
 
 const MAX_SCHEDULED_PER_CHANNEL = 10; // Buffer free plan: 10 scheduled posts per channel
 const MAX_CREATES_PER_RUN = 20;       // keeps a run far under 100 requests / 15 min
-const QUEUE = 'queue/pending.jsonl';
-const LOG = 'published/log.jsonl';
+const STATE_DIR = process.env.STATE_DIR ?? 'state';
+const QUEUE = `${STATE_DIR}/queue/pending.jsonl`;
+const LOG = `${STATE_DIR}/published/log.jsonl`;
 const DRY_RUN = !!process.env.DRY_RUN;
 
 async function readDraft(path) {
@@ -35,6 +37,7 @@ function assetsFor(media = []) {
 }
 
 async function main(drafts) {
+  for (const dir of ['queue', 'published']) mkdirSync(`${STATE_DIR}/${dir}`, { recursive: true });
   const pending = await readJsonl(QUEUE);
   const published = new Set((await readJsonl(LOG)).map((l) => `${l.draft}|${l.channel}`));
 

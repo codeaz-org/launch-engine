@@ -1,6 +1,7 @@
 name: publish
 
-# Merge to main = approval. Schedules approved drafts in Buffer, then commits the log/queue.
+# Merge to main = approval. Schedules approved drafts in Buffer, then commits the log/queue
+# to the `state` branch (main only accepts PRs).
 # Off until the repo variable PUBLISH_ENABLED is set to "true".
 on:
   push:
@@ -29,6 +30,13 @@ jobs:
         with:
           node-version: 22
       - run: npm ci
+      - name: Check out state branch
+        run: |
+          if git ls-remote --exit-code --heads origin state >/dev/null; then
+            git worktree add state origin/state && git -C state switch -c state
+          else
+            git worktree add --orphan -b state state
+          fi
       - name: Find merged drafts
         id: drafts
         run: |
@@ -40,9 +48,10 @@ jobs:
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
         run: node scripts/publish.mjs ${{ steps.drafts.outputs.files }}
-      - name: Commit log and queue
+      - name: Commit log and queue to state
+        working-directory: state
         run: |
-          git config user.name "launch-engine[bot]"
+          git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add published/ queue/
-          git diff --cached --quiet || { git commit -m "publish: log Buffer posts [skip ci]" && git push; }
+          git add -A
+          git diff --cached --quiet || { git commit -m "publish: log Buffer posts" && git push origin state; }

@@ -11,8 +11,16 @@ Rules for agents: [CLAUDE.md](./CLAUDE.md). Verified vendor limits: [docs/LIMITS
 ```
 Routine (Scout/Writer/Replier/Video) --> PR with drafts/<app>/... --> owner merges on phone
    --> .github/workflows/publish.yml --> Buffer (LinkedIn, Instagram, TikTok)
-   --> published/log.jsonl            (manual channels: owner submits the draft by hand)
+   --> state branch: published/log.jsonl   (manual channels: owner submits the draft by hand)
 ```
+
+## Run it
+
+- Daily (cloud): scheduled task "engine" runs the `engine` skill and opens draft PRs.
+- Weekly (cloud, Sunday): scheduled task "analyst" posts the scoreboard issue.
+- Now, from a laptop: `claude "run the engine"` in this repo.
+
+Approve = merge the PR on your phone. Reject = close it.
 
 ## Apps
 

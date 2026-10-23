@@ -1,0 +1,78 @@
+# Channel playbook. The engine reads this to know what each channel needs and how it ships.
+# publish: buffer      = merge PR -> publish workflow schedules it in Buffer
+#          site        = PR against the app repo (e.g. content/guides/*.md); merge = live page
+#          manual      = owner submits by hand after merge (PR body has the exact steps)
+# status:  explore | exploit | paused | dropped   (Analyst updates; kill rule in CLAUDE.md)
+# max_per_week: hard cap per app, keeps volume low and human.
+
+linkedin:
+  publish: buffer
+  format: "Text post 600-1,300 chars, first line = hook, 1 link max (or link in first comment), no hashtag walls (max 3)"
+  max_per_week: 4
+  ready: false              # true once the codeaz LinkedIn is connected in Buffer
+  status: explore
+  best_for: [launch announcement, build-in-public, time-zone pain stories, lessons]
+
+instagram:
+  publish: buffer
+  format: "Reel (video) or single image + caption; link goes in bio, caption says 'link in bio'"
+  needs_media: true
+  max_per_week: 3
+  ready: false
+  status: explore
+  best_for: [short demo clips, before/after standup, remote-work memes done tastefully]
+
+tiktok:
+  publish: buffer
+  format: "9:16 video 20-45 s, hook in first 2 s, captions burned in; no trending sounds (needs manual)"
+  needs_media: true
+  max_per_week: 3
+  ready: false
+  status: explore
+  best_for: [remote-work pain, demo of the 2-minute check-in, time-zone jokes]
+
+seo:
+  publish: site             # PR to codeaz-org/<app> adding content/guides/<slug>.md
+  format: "Guide/comparison page 900-1,800 words answering ONE search intent; title <= 60 chars; meta description <= 155"
+  max_per_week: 2
+  ready: false              # true once the /guides route is merged in the app
+  status: explore
+  best_for: [alternatives pages, how-to across time zones, templates, comparisons]
+
+dev:
+  publish: manual           # owner posts on dev.to; canonical_url = the site guide
+  format: "Article 800-1,500 words; canonical URL to the app's guide; tags max 4"
+  max_per_week: 1
+  ready: true
+  status: explore
+  best_for: [how we built it, technical deep dives (RLS, Whisper pipeline, time zones)]
+
+hashnode:
+  publish: manual
+  format: "Cross-post of a dev article with canonical URL"
+  max_per_week: 1
+  ready: true
+  status: explore
+
+hackernews:
+  publish: manual
+  format: "Show HN: <name> – <plain description>. Title only + first comment from the maker"
+  max_per_week: 1           # one Show HN per app per launch; never resubmit within weeks
+  ready: true
+  status: explore
+
+reddit:
+  publish: manual           # replies and posts are drafts; owner posts from their own account
+  format: "Answer the question fully first; mention the app only if it fits, with 'I'm the maker'"
+  max_per_week: 7
+  ready: true
+  status: explore
+  rules: "Read the subreddit rules + self-promo policy before drafting; put the rules URL in rules_checked"
+
+directories:
+  publish: manual
+  format: "Listing copy: name, tagline <= 60 chars, 160-char and 500-char descriptions, categories, alternatives"
+  max_per_week: 5
+  ready: true
+  status: explore
+  targets: [AlternativeTo, SaaSHub, awesome-selfhosted, OpenAlternative, Product Hunt (week 5)]
