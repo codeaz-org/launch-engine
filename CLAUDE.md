@@ -29,7 +29,11 @@ Success metric: **signups and active users**. Not likes, views, followers or sta
    The Analyst proposes the drop; the owner confirms by closing the issue.
 8. **Respect platform terms.** Research is read-only and low volume. No scraping behind
    logins, no evading blocks, no automated engagement (likes, follows, comments).
-9. **Drafts only** for Show HN, Product Hunt, Reddit, directories (AlternativeTo, SaaSHub,
+9. **One GitHub identity.** All codeaz work acts as the GitHub account `antonzaharia` and
+   nothing else. Before any GitHub write (push, PR, issue, comment, label), check the acting
+   account (GitHub MCP `get_me` or `gh api user --jq .login`). If it is anything else, stop
+   without writing and say so. Never name other accounts in files, PRs, issues or logs.
+10. **Drafts only** for Show HN, Product Hunt, Reddit, directories (AlternativeTo, SaaSHub,
    awesome-lists) and DEV/Hashnode. The owner submits these manually.
 
 ## Repo layout

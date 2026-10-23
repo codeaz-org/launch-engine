@@ -5,6 +5,8 @@ node_modules/
 .DS_Store
 *.mp4
 *.mov
+.claude/settings.local.json
+.claude/hooks/
 video/node_modules/
 video/out/
 video/public/
