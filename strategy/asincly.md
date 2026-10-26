@@ -22,14 +22,14 @@ Start date of the launch kit: 2026-10-26 (week 1).
 | Channel | Status | Items shipped | Visits | Orgs created | Active orgs | Since |
 |---|---|---|---|---|---|---|
 | (unattributed) | n/a | n/a | n/a | 1 | 1 | pre-launch |
-| linkedin | explore | 0 (post #4 queued for 2026-10-28; Buffer publishing off) | n/a | 0 | 0 | 2026-10-23 |
-| seo | explore | 0 (guide asincly#17 not live) | n/a | 0 | 0 | 2026-10-23 |
+| linkedin | explore | 0 live (2 scheduled in Buffer: 10-28, 10-30; video PR #14 merged for 10-29) | n/a | 0 | 0 | 2026-10-23 |
+| seo | explore | 0 (guides asincly#21, #22 drafted, not confirmed live) | n/a | 0 | 0 | 2026-10-23 |
 | hackernews | explore | 0 (draft approved, post week 2) | n/a | 0 | 0 | 2026-10-23 |
 | directories | explore | 0 (copy approved, owner submits) | n/a | 0 | 0 | 2026-10-23 |
 | reddit, dev, hashnode, instagram, tiktok | explore | 0 | n/a | 0 | 0 | 2026-10-23 |
 
-Stats 2026-10-23 (api/stats): orgs 1, orgs_7d 0, orgs_28d 1, active_users_7d 1, check_ins_7d 3.
-The one org has no UTM source (source null); likely the owner's own test org, not a user.
+Stats 2026-10-25 (api/stats): orgs 1, orgs_7d 0, orgs_28d 1, active_users_7d 1, check_ins_7d 2.
+Only row in bySource is source null (the 1 org, active). Same as 2026-10-23; likely the owner's test org.
 Visits are not measured (first-party stats count orgs only).
 
 ## Beliefs and experiments
@@ -48,3 +48,4 @@ Each experiment: id, channel, hypothesis, what counts as success, end date.
 - 2026-10-23: Maker face/name optional; prefer faceless screen-recorded demos and "I'm the maker" text disclosure.
 - 2026-10-23 (Analyst): week 0, nothing published, no channel has data. No kill-rule action.
   E1-E5 stay open; first real read is the 2026-11-06 scoreboard.
+- 2026-10-25 (Analyst): still nothing live. Stats unchanged (0 attributed orgs). Kill-rule clock has not started for any channel. E1-E5 stay open.
