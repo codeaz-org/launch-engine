@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-27T10:52:35.092Z",
+  "generated_at": "2026-10-28T11:33:42.176Z",
   "posts": [
     {
       "draft": "drafts/asincly/post/2026-10-28-linkedin-timezones.md",
@@ -8,9 +8,9 @@
       "channel": "linkedin",
       "link": "https://asincly.codeaz.org/?utm_source=linkedin&utm_medium=social&utm_campaign=asincly-w1&utm_content=timezones",
       "buffer_post_id": "6adb4d014553446d6b7cf1c7",
-      "status": "scheduled",
-      "sent_at": null,
-      "public_url": null,
+      "status": "sent",
+      "sent_at": "2026-10-28T08:07:24.333Z",
+      "public_url": "https://www.linkedin.com/feed/update/urn:li:share:7521120420079775744",
       "metrics_updated_at": "2026-10-23T12:03:13.544Z",
       "metrics": {
         "reactions": 0,
