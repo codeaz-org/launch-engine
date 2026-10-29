@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-28T11:33:42.176Z",
+  "generated_at": "2026-10-29T11:42:12.662Z",
   "posts": [
     {
       "draft": "drafts/asincly/post/2026-10-28-linkedin-timezones.md",
@@ -11,13 +11,13 @@
       "status": "sent",
       "sent_at": "2026-10-28T08:07:24.333Z",
       "public_url": "https://www.linkedin.com/feed/update/urn:li:share:7521120420079775744",
-      "metrics_updated_at": "2026-10-23T12:03:13.544Z",
+      "metrics_updated_at": "2026-10-29T06:47:14.403Z",
       "metrics": {
         "reactions": 0,
         "comments": 0,
-        "engagementRate": 0,
-        "impressions": 0,
-        "reach": 0,
+        "engagementRate": 1.36986301369863,
+        "impressions": 73,
+        "reach": 64,
         "shares": 0
       }
     },
