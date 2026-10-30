@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-29T11:42:12.662Z",
+  "generated_at": "2026-10-30T11:34:10.997Z",
   "posts": [
     {
       "draft": "drafts/asincly/post/2026-10-28-linkedin-timezones.md",
@@ -11,13 +11,13 @@
       "status": "sent",
       "sent_at": "2026-10-28T08:07:24.333Z",
       "public_url": "https://www.linkedin.com/feed/update/urn:li:share:7521120420079775744",
-      "metrics_updated_at": "2026-10-29T06:47:14.403Z",
+      "metrics_updated_at": "2026-10-30T06:47:26.895Z",
       "metrics": {
         "reactions": 0,
         "comments": 0,
-        "engagementRate": 1.36986301369863,
-        "impressions": 73,
-        "reach": 64,
+        "engagementRate": 1.2987012987012987,
+        "impressions": 77,
+        "reach": 68,
         "shares": 0
       }
     },
@@ -28,9 +28,9 @@
       "channel": "linkedin",
       "link": "https://asincly.codeaz.org/?utm_source=linkedin&utm_medium=social&utm_campaign=asincly-w1&utm_content=dst-week",
       "buffer_post_id": "6adda276e4be8a4d869443a7",
-      "status": "scheduled",
-      "sent_at": null,
-      "public_url": null,
+      "status": "sent",
+      "sent_at": "2026-10-30T08:07:02.632Z",
+      "public_url": "https://www.linkedin.com/feed/update/urn:li:share:7521845105130029056",
       "metrics_updated_at": "2026-10-25T06:32:22.936Z",
       "metrics": {
         "reactions": 0,
